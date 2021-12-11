@@ -1,7 +1,7 @@
 ﻿
 namespace SpaceInvaders
 {
-    partial class SpaceInvaders
+    partial class Space
     {
         /// <summary>
         /// Required designer variable.
@@ -30,12 +30,8 @@ namespace SpaceInvaders
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SpaceInvaders));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Space));
             this.LzrCan = new System.Windows.Forms.PictureBox();
-            this.LevelNumBox = new System.Windows.Forms.TextBox();
-            this.LevelBox = new System.Windows.Forms.TextBox();
-            this.ScoreNumBox = new System.Windows.Forms.TextBox();
-            this.ScoreBox = new System.Windows.Forms.TextBox();
             this.Life1 = new System.Windows.Forms.PictureBox();
             this.Life2 = new System.Windows.Forms.PictureBox();
             this.pictureBox18 = new System.Windows.Forms.PictureBox();
@@ -60,6 +56,10 @@ namespace SpaceInvaders
             this.Alien2 = new System.Windows.Forms.PictureBox();
             this.Alien1 = new System.Windows.Forms.PictureBox();
             this.GameTimer = new System.Windows.Forms.Timer(this.components);
+            this.ScoreLabel = new System.Windows.Forms.Label();
+            this.LevelLabel = new System.Windows.Forms.Label();
+            this.ScoreNumLabel = new System.Windows.Forms.Label();
+            this.LevelNumLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.LzrCan)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Life1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Life2)).BeginInit();
@@ -97,63 +97,6 @@ namespace SpaceInvaders
             this.LzrCan.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.LzrCan.TabIndex = 0;
             this.LzrCan.TabStop = false;
-            // 
-            // LevelNumBox
-            // 
-            this.LevelNumBox.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
-            this.LevelNumBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.LevelNumBox.Enabled = false;
-            this.LevelNumBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LevelNumBox.ForeColor = System.Drawing.SystemColors.InactiveBorder;
-            this.LevelNumBox.Location = new System.Drawing.Point(580, 43);
-            this.LevelNumBox.Name = "LevelNumBox";
-            this.LevelNumBox.Size = new System.Drawing.Size(110, 20);
-            this.LevelNumBox.TabIndex = 81;
-            this.LevelNumBox.Text = "1";
-            this.LevelNumBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // LevelBox
-            // 
-            this.LevelBox.BackColor = System.Drawing.SystemColors.InfoText;
-            this.LevelBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.LevelBox.Enabled = false;
-            this.LevelBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LevelBox.ForeColor = System.Drawing.SystemColors.InactiveBorder;
-            this.LevelBox.Location = new System.Drawing.Point(580, 13);
-            this.LevelBox.Name = "LevelBox";
-            this.LevelBox.Size = new System.Drawing.Size(110, 23);
-            this.LevelBox.TabIndex = 80;
-            this.LevelBox.Text = "Level";
-            this.LevelBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // ScoreNumBox
-            // 
-            this.ScoreNumBox.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
-            this.ScoreNumBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.ScoreNumBox.Enabled = false;
-            this.ScoreNumBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ScoreNumBox.ForeColor = System.Drawing.SystemColors.InactiveBorder;
-            this.ScoreNumBox.Location = new System.Drawing.Point(305, 41);
-            this.ScoreNumBox.Name = "ScoreNumBox";
-            this.ScoreNumBox.Size = new System.Drawing.Size(110, 20);
-            this.ScoreNumBox.TabIndex = 79;
-            this.ScoreNumBox.Text = "0";
-            this.ScoreNumBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // ScoreBox
-            // 
-            this.ScoreBox.BackColor = System.Drawing.SystemColors.InfoText;
-            this.ScoreBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.ScoreBox.Enabled = false;
-            this.ScoreBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ScoreBox.ForeColor = System.Drawing.SystemColors.InactiveBorder;
-            this.ScoreBox.Location = new System.Drawing.Point(305, 13);
-            this.ScoreBox.Name = "ScoreBox";
-            this.ScoreBox.ReadOnly = true;
-            this.ScoreBox.Size = new System.Drawing.Size(110, 23);
-            this.ScoreBox.TabIndex = 78;
-            this.ScoreBox.Text = "Score";
-            this.ScoreBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // Life1
             // 
@@ -433,18 +376,60 @@ namespace SpaceInvaders
             // 
             // GameTimer
             // 
-            this.GameTimer.Interval = 300;
+            this.GameTimer.Enabled = true;
+            this.GameTimer.Interval = 500;
+            this.GameTimer.Tick += new System.EventHandler(this.GameTimer_Tick);
             // 
-            // SpaceInvaders
+            // ScoreLabel
+            // 
+            this.ScoreLabel.AutoSize = true;
+            this.ScoreLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ScoreLabel.Location = new System.Drawing.Point(325, 9);
+            this.ScoreLabel.Name = "ScoreLabel";
+            this.ScoreLabel.Size = new System.Drawing.Size(69, 25);
+            this.ScoreLabel.TabIndex = 82;
+            this.ScoreLabel.Text = "Score\r\n";
+            // 
+            // LevelLabel
+            // 
+            this.LevelLabel.AutoSize = true;
+            this.LevelLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LevelLabel.Location = new System.Drawing.Point(626, 13);
+            this.LevelLabel.Name = "LevelLabel";
+            this.LevelLabel.Size = new System.Drawing.Size(64, 25);
+            this.LevelLabel.TabIndex = 83;
+            this.LevelLabel.Text = "Level";
+            // 
+            // ScoreNumLabel
+            // 
+            this.ScoreNumLabel.AutoSize = true;
+            this.ScoreNumLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ScoreNumLabel.Location = new System.Drawing.Point(351, 43);
+            this.ScoreNumLabel.Name = "ScoreNumLabel";
+            this.ScoreNumLabel.Size = new System.Drawing.Size(18, 20);
+            this.ScoreNumLabel.TabIndex = 84;
+            this.ScoreNumLabel.Text = "0";
+            // 
+            // LevelNumLabel
+            // 
+            this.LevelNumLabel.AutoSize = true;
+            this.LevelNumLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LevelNumLabel.Location = new System.Drawing.Point(651, 43);
+            this.LevelNumLabel.Name = "LevelNumLabel";
+            this.LevelNumLabel.Size = new System.Drawing.Size(18, 20);
+            this.LevelNumLabel.TabIndex = 85;
+            this.LevelNumLabel.Text = "1";
+            // 
+            // Space
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.ClientSize = new System.Drawing.Size(702, 603);
-            this.Controls.Add(this.LevelNumBox);
-            this.Controls.Add(this.LevelBox);
-            this.Controls.Add(this.ScoreNumBox);
-            this.Controls.Add(this.ScoreBox);
+            this.Controls.Add(this.LevelNumLabel);
+            this.Controls.Add(this.ScoreNumLabel);
+            this.Controls.Add(this.LevelLabel);
+            this.Controls.Add(this.ScoreLabel);
             this.Controls.Add(this.Life1);
             this.Controls.Add(this.Life2);
             this.Controls.Add(this.pictureBox18);
@@ -469,9 +454,9 @@ namespace SpaceInvaders
             this.Controls.Add(this.Alien2);
             this.Controls.Add(this.Alien1);
             this.Controls.Add(this.LzrCan);
-            this.Name = "SpaceInvaders";
+            this.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.Name = "Space";
             this.Text = "Space Invaders";
-            this.Load += new System.EventHandler(this.SP_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.SpaceInvaders_KeyDown);
             ((System.ComponentModel.ISupportInitialize)(this.LzrCan)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Life1)).EndInit();
@@ -505,10 +490,6 @@ namespace SpaceInvaders
         #endregion
 
         private System.Windows.Forms.PictureBox LzrCan;
-        private System.Windows.Forms.TextBox LevelNumBox;
-        private System.Windows.Forms.TextBox LevelBox;
-        private System.Windows.Forms.TextBox ScoreNumBox;
-        private System.Windows.Forms.TextBox ScoreBox;
         private System.Windows.Forms.PictureBox Life1;
         private System.Windows.Forms.PictureBox Life2;
         private System.Windows.Forms.PictureBox pictureBox18;
@@ -533,6 +514,10 @@ namespace SpaceInvaders
         private System.Windows.Forms.PictureBox Alien2;
         private System.Windows.Forms.PictureBox Alien1;
         private System.Windows.Forms.Timer GameTimer;
+        private System.Windows.Forms.Label ScoreLabel;
+        private System.Windows.Forms.Label LevelLabel;
+        private System.Windows.Forms.Label ScoreNumLabel;
+        private System.Windows.Forms.Label LevelNumLabel;
     }
 }
 
