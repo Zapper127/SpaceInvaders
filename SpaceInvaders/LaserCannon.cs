@@ -25,18 +25,29 @@ namespace SpaceInvaders
             form.Controls.Add(lzrcan);
         }
         */
-        private void MakeCannon(Form form, int x, int y, int sizex, int sizey)
+        private bool _fire;
+
+        //Property to change _fire variable so Shoot Cannon is allowed to run again
+        public bool Fire
+        {
+            get { return _fire; }
+
+            set { _fire = value; }
+
+        }
+        private void MakeCannon(Form form, int x, int y)
         {
             PictureBox lzrcan = new PictureBox();
             lzrcan.Image = Properties.Resources.LaserCannon;
+            lzrcan.Size = new Size(50, 50);
             lzrcan.SizeMode = PictureBoxSizeMode.StretchImage;
-            lzrcan.Size = new Size(sizex, sizey);
             lzrcan.Location = new Point(x, y);
 
             form.Controls.Add(lzrcan);
         }
         
-        private bool _fire;
+        //Moves cannon left and right and makes sure it stays within its bounds using s and d respectively
+        //Also activates the shoot method whe spacebar is pressed
         public void MoveCannon(PictureBox LzrCan, KeyEventArgs e)
         {
             switch (e.KeyCode)
@@ -57,24 +68,23 @@ namespace SpaceInvaders
                     if (_fire == false)
                     {
                         _fire = true;
-                        ShootCannon(Space.ActiveForm, "blast", LzrCan);
+                        ShootCannon(Space.ActiveForm, LzrCan);
                     }
                     break;
             }
         }
-        public void ShootCannon(Form form, string blastTag, PictureBox LzrCan)
+
+        // Creates a picturebox above the LsrCan picture box and halfway in between the -2 is to 
+        // align the middle of the picture box with the middle
+        public void ShootCannon(Form form, PictureBox LzrCan)
         {
             PictureBox blast = new PictureBox();
             blast.BackColor = Color.White;
-            blast.Width = 5;
+            blast.Width = 3;
             blast.Height = 20;
-            blast.Tag = blastTag;
+            blast.Tag = "blast";
             blast.Left = (LzrCan.Left + LzrCan.Width / 2) - 2;
-            
-            if ((string)blast.Tag == "blast")
-            {
-                blast.Top = LzrCan.Top - 20;
-            }
+            blast.Top = LzrCan.Top - 20;
             
             form.Controls.Add(blast);
         }
