@@ -56,7 +56,7 @@ namespace SpaceInvaders
 
             UpdateForm.UpdateShots(this, laserCannon);
             score += UpdateForm.ObjectHit(this, laserCannon, score, AlienList);
-            gameOver = UpdateForm.GammaHit(this, Life, Lif);
+            gameOver = UpdateForm.GammaHit(this, Life1, Life2, laserCannon);
 
             if (gameOver == true)
             {

@@ -119,7 +119,7 @@ namespace SpaceInvaders
             }
             return 0;
         }
-        public static bool GammaHit (Form form, PictureBox life1, PictureBox life2)
+        public static bool GammaHit (Form form, PictureBox life1, PictureBox life2, LaserCannon laserCannon)
         {
             foreach (Control gammaRay in form.Controls)
             {
@@ -161,6 +161,7 @@ namespace SpaceInvaders
                         {
                             if (gammaRay.Bounds.IntersectsWith(obj.Bounds))
                             {
+                                laserCannon.Fire = false;
                                 form.Controls.Remove(gammaRay);
                                 form.Controls.Remove(obj);
                             }
