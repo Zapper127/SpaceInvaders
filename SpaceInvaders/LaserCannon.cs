@@ -13,19 +13,16 @@ namespace SpaceInvaders
 
     class LaserCannon : System.Windows.Forms.Form
     {
-        /*
-        public LaserCannon(Form form) 
-        {
-            PictureBox lzrcan = new PictureBox();
-            lzrcan.Image = Properties.Resources.LaserCannon;
-            lzrcan.SizeMode = PictureBoxSizeMode.StretchImage;
-            lzrcan.Size = new Size(50, 50);
-            lzrcan.Location = new Point(335, 535);
-
-            form.Controls.Add(lzrcan);
-        }
-        */
         private bool _fire;
+        private int _moveRate;
+        private int _widthHeight;
+
+
+        public LaserCannon()
+        {
+            _moveRate = 10;
+            _widthHeight = 50;
+        }
 
         //Property to change _fire variable so Shoot Cannon is allowed to run again
         public bool Fire
@@ -39,7 +36,7 @@ namespace SpaceInvaders
         {
             PictureBox lzrcan = new PictureBox();
             lzrcan.Image = Properties.Resources.LaserCannon;
-            lzrcan.Size = new Size(50, 50);
+            lzrcan.Size = new Size(_widthHeight, _widthHeight);
             lzrcan.SizeMode = PictureBoxSizeMode.StretchImage;
             lzrcan.Location = new Point(x, y);
 
@@ -53,15 +50,15 @@ namespace SpaceInvaders
             switch (e.KeyCode)
             {
                 case Keys.D:
-                    if ((LzrCan.Left + 10) < (543 - 51))
+                    if ((LzrCan.Left + _moveRate) < (543 - 51))
                     {
-                        LzrCan.Left += 10;
+                        LzrCan.Left += _moveRate;
                     }
                     break;
                 case Keys.S:
-                    if ((LzrCan.Left - 10) > 0)
+                    if ((LzrCan.Left - _moveRate) > 0)
                     {
-                        LzrCan.Left -= 10;
+                        LzrCan.Left -= _moveRate;
                     }
                     break;
                 case Keys.Space:
@@ -78,11 +75,14 @@ namespace SpaceInvaders
         // align the middle of the picture box with the middle
         public void ShootCannon(Form form, PictureBox LzrCan)
         {
-            PictureBox blast = new PictureBox();
-            blast.BackColor = Color.White;
-            blast.Width = 3;
-            blast.Height = 20;
-            blast.Tag = "blast";
+            PictureBox blast = new PictureBox
+            {
+                BackColor = Color.White,
+                Width = 3,
+                Height = 20,
+                Tag = "blast",
+            };
+
             blast.Left = (LzrCan.Left + LzrCan.Width / 2) - 2;
             blast.Top = LzrCan.Top - 20;
             

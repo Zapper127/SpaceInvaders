@@ -14,17 +14,27 @@ namespace SpaceInvaders
     {
         LaserCannon laserCannon = new LaserCannon();
         Alien aliens = new Alien();
+        UFO ufo = new UFO();
+        Barrier barrier = new Barrier(66, 375);
+        Barrier barrier2 = new Barrier(216, 375);
+        Barrier barrier3 = new Barrier(366, 375);
+        public List<PictureBox> AlienList = new List<PictureBox>();
         public int score = 0;
+        public int level = 1;
         bool gameOver;
+        bool gameReset;
+
         public Space()
         {
             InitializeComponent();
+            GameStart();
         }
   
         private void Space_Shown(object sender, EventArgs e)
         {
-            GameStart();
+            //GameStart();
         }
+  
         //Move laser cannon
         private void SpaceInvaders_KeyDown(object sender, KeyEventArgs e)
         {
@@ -35,31 +45,59 @@ namespace SpaceInvaders
         {
             UpdateForm.UpdateScore(ScoreNumLabel, score);
 
-            UpdateForm.UpdateAlienPosition(Space.ActiveForm);
+            ufo.MakeUFO(Space.ActiveForm);
 
-            UpdateForm.UpdateShots(Space.ActiveForm, laserCannon);
+            ufo.UFOGenerated = UpdateForm.UpdateUFOPosition(this);
 
-            score += UpdateForm.AlienHit(Space.ActiveForm, laserCannon, score);
-
-            gameOver = UpdateForm.CheckAlienCount();
+            gameOver = UpdateForm.AlienHit(this);
 
             if (gameOver == true)
             {
                 GameOver();
             }
+
+            UpdateForm.UpdateShots(this, laserCannon);
+
+            score += UpdateForm.ObjectHit(this, laserCannon, score, AlienList);
+
+            gameReset = UpdateForm.CheckAlienCount();
+
+            if (gameReset == true)
+            {
+                GameReset();
+            }
+        }
+        private void GameReset()
+        {
+            gameReset = false;
+            level++;
+            AlienList.Clear();
+            LevelNumLabel.Text = level.ToString();
+            barrier.X = 66;
+            barrier.Y = 375;
+            barrier2.X = 216;
+            barrier2.Y = 375;
+            barrier3.X = 366;
+            barrier3.Y = 375;
+            AlienTimer.Interval = 500;
+            GameStart();
         }
         private void GameOver()
         {
             GameTimer.Stop();
-            gameOver = true;
-            ScoreLabel.Text = "GAME OVER";
+            AlienTimer.Stop();
+            pictureBox1.Visible = true;
             ScoreNumLabel.Text = score.ToString();
         }
 
         // Game is started
         private void GameStart()
         {
-            aliens.SpawnAliens();
+            aliens.SpawnAlienArmy(this);
+            AlienMakeList();
+            barrier.SpawnBarrier(this);
+            barrier2.SpawnBarrier(this);
+            barrier3.SpawnBarrier(this);
         }
 
         public int Score
@@ -69,34 +107,34 @@ namespace SpaceInvaders
             set { score = value; }
         }
 
-
-        /*
-            private void MakeCannon()
+        private void AlienTimer_Tick(object sender, EventArgs e)
+        {
+            UpdateForm.UpdateAlienPosition(AlienList);
+            if (UpdateForm.AlienCount <= 3)
             {
-              PictureBox lzrcan = new PictureBox();
-              lzrcan.Image = Properties.Resources.LaserCannon;
-              lzrcan.SizeMode = PictureBoxSizeMode.StretchImage;
-              lzrcan.Size = new Size(50, 50);
-              lzrcan.Location = new Point(335, 535);
-
-              this.Controls.Add(lzrcan);
+                AlienTimer.Interval = 90;
             }
-
-            private void MakeBlast()
+            else if (UpdateForm.AlienCount <= 7)
             {
-               PictureBox blast = new PictureBox();
-               blast.BackColor = Color.White;
-               blast.Width = 20;
-               blast.Height = 20;
-
-               blast.Left = LzrCan.Left + LzrCan.Width / 2;
-               blast.Top = LzrCan.Height + 350;
-
-               blast.Tag = "blast";
-
-               this.Controls.Add(blast);
+                AlienTimer.Interval = 250;
             }
-            */
+            else if (UpdateForm.AlienCount <= 14)
+            {
+                AlienTimer.Interval = 400;
+            }
+        }
+
+        private void AlienMakeList ()
+        {
+            foreach (Control pic in this.Controls)
+            {
+                if (pic is PictureBox && pic.Tag.ToString() == "Alien")
+                {
+                    PictureBox alien = (PictureBox)pic;
+                    AlienList.Add(alien);
+                }
+            }
+        }
     }
 }
 

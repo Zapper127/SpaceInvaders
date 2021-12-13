@@ -12,40 +12,71 @@ namespace SpaceInvaders
 {
     class Alien
     {
+        private int _widthHeight;
+        private int _x, _y, _xpadding, _ypadding;
+        private int _columns, _rows;
+        private Image _squidImage;
+        private Image _crabImage;
+        private Image _octImage;
+        PictureBox alien;
 
-        private int _fireRate;
-        private int _squidx = 105, _crabx = 150, _octx = 196;
-        private Image _squidImage = Properties.Resources.invader8;
-        private Image _crabImage = Properties.Resources.invader3;
-        private Image _octImage = Properties.Resources.invader1;
-
-        //Spawns 1 row of aliens using an array of pictureboxes depending on specified type
-        public void SpawnAlienArray(Form form, int ypos, Image image)
+        public Alien ()
         {
-            int c, xpos = 105;
-
-            PictureBox[] alienarray = new PictureBox[7];
-
-            for (c = 0; c < alienarray.Length; c++)
+            _widthHeight = 30;
+            _columns = 7;
+            _rows = 3;
+            _xpadding = 49;
+            _ypadding = 45;
+            _x = 105;
+            _y = 105;
+            _squidImage = Properties.Resources.invader8;
+            _crabImage = Properties.Resources.invader3;
+            _octImage = Properties.Resources.invader1;
+            alien = new PictureBox();
+        }
+        private void SpawnAlien (Form form, Image alienImage)
+        {
+            alien = new PictureBox
             {
-                alienarray[c] = new PictureBox {
-                    Size = new Size(38, 38),
-                    Location = new Point (xpos, ypos),
-                    Image = image,
-                    SizeMode = PictureBoxSizeMode.StretchImage,
-                    Tag = "Alien",
-                };
-                form.Controls.Add(alienarray[c]);
-                xpos += 49;
+                Location = new Point(_x, _y),
+                Size = new Size(_widthHeight, _widthHeight),
+                BackgroundImage = alienImage,
+                BackgroundImageLayout = ImageLayout.Stretch,
+                Tag = "Alien",
+            };
+
+            form.Controls.Add(alien);
+        }
+        public void SpawnAlienArray (Form form, Image alienImage)
+        {
+            for (int c = 0; c < _columns; c++)
+            {
+                SpawnAlien(form, alienImage);
+                _x += _xpadding;
             }
+            _y += _ypadding;
+            _x = 105;
         }
 
-        //Spawns all three rows of aliens
-        public void SpawnAliens()
+        public void SpawnAlienArmy (Form form)
         {
-            SpawnAlienArray(Space.ActiveForm, _squidx, _squidImage);
-            SpawnAlienArray(Space.ActiveForm, _crabx, _crabImage);
-            SpawnAlienArray(Space.ActiveForm, _octx, _octImage);
+            _y = 105;
+            for (int c = 0; c < _rows; c++)
+            {
+                //Alternates the alien image every 3 rows adn then repeats
+                if (c % 3 == 0)
+                {
+                    SpawnAlienArray(form, _squidImage);
+                }
+                else if (c % 3 == 1)
+                {
+                    SpawnAlienArray(form, _crabImage);
+                }
+                else if (c % 3 == 2)
+                {
+                    SpawnAlienArray(form, _octImage);
+                }
+            }
         }
     }
 }
