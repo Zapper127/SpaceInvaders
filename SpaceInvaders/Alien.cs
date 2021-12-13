@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace SpaceInvaders
 {
-    class Alien
+    class Alien : GameObject
     {
         private int _widthHeight;
         private int _x, _y, _xpadding, _ypadding;
@@ -34,19 +34,21 @@ namespace SpaceInvaders
             _octImage = Properties.Resources.invader1;
             alien = new PictureBox();
         }
+        //Spawns a single alien picturebox
         private void SpawnAlien (Form form, Image alienImage)
         {
             alien = new PictureBox
             {
                 Location = new Point(_x, _y),
                 Size = new Size(_widthHeight, _widthHeight),
-                BackgroundImage = alienImage,
-                BackgroundImageLayout = ImageLayout.Stretch,
+                Image = alienImage,
+                SizeMode = PictureBoxSizeMode.StretchImage,
                 Tag = "Alien",
             };
 
             form.Controls.Add(alien);
         }
+        //Spawns an array of alien pictureboxes
         public void SpawnAlienArray (Form form, Image alienImage)
         {
             for (int c = 0; c < _columns; c++)
@@ -57,8 +59,8 @@ namespace SpaceInvaders
             _y += _ypadding;
             _x = 105;
         }
-
-        public void SpawnAlienArmy (Form form)
+        //Spawns an entire grid of alien pictureboxes
+        public override void SpawnGameObject (Form form)
         {
             _y = 105;
             for (int c = 0; c < _rows; c++)
@@ -77,6 +79,18 @@ namespace SpaceInvaders
                     SpawnAlienArray(form, _octImage);
                 }
             }
+        }
+        public void GammaRay(Form form, PictureBox alien)
+        {
+            PictureBox gammaRay = new PictureBox {
+                Location = new Point(alien.Location.X + alien.Width / 3, alien.Location.Y + 20),
+                Size = new Size(3, 18),
+                BackColor = Color.Orange,
+                SizeMode = PictureBoxSizeMode.StretchImage,
+                Tag = "GammaRay",
+        };
+
+            form.Controls.Add(gammaRay);
         }
     }
 }

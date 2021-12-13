@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace SpaceInvaders
 {
-    class UFO
+    class UFO : GameObject
     {
         private Random _randomNum;
         private bool _ufoGenerated;
@@ -42,7 +42,7 @@ namespace SpaceInvaders
         }
 
         //Attempts to make a ufo if there is not already one on the screen and the random number generated is 7
-        public void MakeUFO(Form form)
+        public override void SpawnGameObject (Form form)
         {
             Random();
             if (_ufoGenerated == false && _num == _key)
@@ -50,12 +50,13 @@ namespace SpaceInvaders
 
                 PictureBox UFO = new PictureBox 
                 {
+                    Location = spawnLocation,
                     Image = Properties.Resources.UFO,
                     Size = new Size(_width, _height),
                     SizeMode = PictureBoxSizeMode.StretchImage,
                     Tag = "UFO",
                 };
-                UFO.Location = spawnLocation;
+                //UFO.Location = spawnLocation;
 
                 _num = 0;
                 _ufoGenerated = true;

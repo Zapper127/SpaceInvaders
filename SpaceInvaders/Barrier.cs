@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace SpaceInvaders
 {
-    class Barrier
+    class Barrier : GameObject
     {
         private int _widthHeight;
         private int _padding;
@@ -28,40 +28,42 @@ namespace SpaceInvaders
             _y = y;
             barrier = new PictureBox();
         }
-        
+        //Allows _x value to be read and set
         public int X
         {
             get { return _x; }
 
             set { _x = value; _xsave = value; }
         }
+        //Allows _y value to be read and set
         public int Y
         {
             get { return _y; }
 
             set { _y = value; }
         }
-        public void MakeBarrier (Form form)
+        //Creates a single barrier block
+        public override void SpawnGameObject (Form form)
         {
             barrier = new PictureBox
             {
                 Location = new Point(_x, _y),
                 Size = new Size(_widthHeight, _widthHeight),
                 BackColor = Color.Green,
-                BackgroundImageLayout = ImageLayout.Stretch,
+                SizeMode = PictureBoxSizeMode.StretchImage,
                 Tag = "Barrier",
             };
 
             form.Controls.Add(barrier);
         }
-
+        //Spawns an entire barrier
         public void SpawnBarrier (Form form)
         {
             for (int c = 0; c < _rows; c++)
             {
                 for (int j = 0; j < _columns; j++)
                 {
-                    MakeBarrier(form);
+                    SpawnGameObject(form);
                     _x += _padding;
                 }
                 _y += _padding;

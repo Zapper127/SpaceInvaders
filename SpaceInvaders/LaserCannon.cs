@@ -11,7 +11,7 @@ using System.Windows.Forms;
 namespace SpaceInvaders
 {
 
-    class LaserCannon : System.Windows.Forms.Form
+    class LaserCannon
     {
         private bool _fire;
         private int _moveRate;
@@ -32,13 +32,15 @@ namespace SpaceInvaders
             set { _fire = value; }
 
         }
-        private void MakeCannon(Form form, int x, int y)
+        public void MakeCannon(Form form, int x, int y, string name)
         {
             PictureBox lzrcan = new PictureBox();
             lzrcan.Image = Properties.Resources.LaserCannon;
-            lzrcan.Size = new Size(_widthHeight, _widthHeight);
+            lzrcan.Size = new Size(30, 30);
             lzrcan.SizeMode = PictureBoxSizeMode.StretchImage;
             lzrcan.Location = new Point(x, y);
+            lzrcan.Name = name;
+            lzrcan.Tag = "Cannon";
 
             form.Controls.Add(lzrcan);
         }
@@ -79,12 +81,11 @@ namespace SpaceInvaders
             {
                 BackColor = Color.White,
                 Width = 3,
-                Height = 20,
+                Height = 17,
+                Left = (LzrCan.Left + LzrCan.Width / 2) - 2,
+                Top = LzrCan.Top - 17,
                 Tag = "blast",
             };
-
-            blast.Left = (LzrCan.Left + LzrCan.Width / 2) - 2;
-            blast.Top = LzrCan.Top - 20;
             
             form.Controls.Add(blast);
         }

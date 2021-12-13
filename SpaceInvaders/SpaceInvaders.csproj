@@ -48,15 +48,14 @@
   <ItemGroup>
     <Compile Include="Alien.cs" />
     <Compile Include="Barrier.cs" />
+    <Compile Include="GameObject.cs" />
     <Compile Include="SpaceInvaders.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="SpaceInvaders.Designer.cs">
       <DependentUpon>SpaceInvaders.cs</DependentUpon>
     </Compile>
-    <Compile Include="LaserCannon.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="LaserCannon.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UFO.cs" />

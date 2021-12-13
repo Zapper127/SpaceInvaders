@@ -38,12 +38,13 @@ namespace SpaceInvaders
             this.LevelNumLabel = new System.Windows.Forms.Label();
             this.AlienTimer = new System.Windows.Forms.Timer(this.components);
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.Life1 = new System.Windows.Forms.PictureBox();
-            this.Life2 = new System.Windows.Forms.PictureBox();
+            this.Life = new System.Windows.Forms.PictureBox();
+            this.Lif = new System.Windows.Forms.PictureBox();
             this.LzrCan = new System.Windows.Forms.PictureBox();
+            this.GammaRayTimer = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.Life1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.Life2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Life)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Lif)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.LzrCan)).BeginInit();
             this.SuspendLayout();
             // 
@@ -117,31 +118,31 @@ namespace SpaceInvaders
             this.pictureBox1.Tag = "GameOver";
             this.pictureBox1.Visible = false;
             // 
-            // Life1
+            // Life
             // 
-            this.Life1.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.Life1.Image = global::SpaceInvaders.Properties.Resources.LaserCannon;
-            this.Life1.InitialImage = ((System.Drawing.Image)(resources.GetObject("Life1.InitialImage")));
-            this.Life1.Location = new System.Drawing.Point(66, 13);
-            this.Life1.Name = "Life1";
-            this.Life1.Size = new System.Drawing.Size(50, 50);
-            this.Life1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.Life1.TabIndex = 77;
-            this.Life1.TabStop = false;
-            this.Life1.Tag = "Cannon";
+            this.Life.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.Life.Image = global::SpaceInvaders.Properties.Resources.LaserCannon;
+            this.Life.InitialImage = ((System.Drawing.Image)(resources.GetObject("Life.InitialImage")));
+            this.Life.Location = new System.Drawing.Point(66, 13);
+            this.Life.Name = "Life";
+            this.Life.Size = new System.Drawing.Size(50, 50);
+            this.Life.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.Life.TabIndex = 77;
+            this.Life.TabStop = false;
+            this.Life.Tag = "Cannon";
             // 
-            // Life2
+            // Lif
             // 
-            this.Life2.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.Life2.Image = global::SpaceInvaders.Properties.Resources.LaserCannon;
-            this.Life2.InitialImage = ((System.Drawing.Image)(resources.GetObject("Life2.InitialImage")));
-            this.Life2.Location = new System.Drawing.Point(10, 13);
-            this.Life2.Name = "Life2";
-            this.Life2.Size = new System.Drawing.Size(50, 50);
-            this.Life2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.Life2.TabIndex = 76;
-            this.Life2.TabStop = false;
-            this.Life2.Tag = "Cannon";
+            this.Lif.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.Lif.Image = global::SpaceInvaders.Properties.Resources.LaserCannon;
+            this.Lif.InitialImage = ((System.Drawing.Image)(resources.GetObject("Lif.InitialImage")));
+            this.Lif.Location = new System.Drawing.Point(10, 13);
+            this.Lif.Name = "Lif";
+            this.Lif.Size = new System.Drawing.Size(50, 50);
+            this.Lif.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.Lif.TabIndex = 76;
+            this.Lif.TabStop = false;
+            this.Lif.Tag = "Cannon";
             // 
             // LzrCan
             // 
@@ -156,6 +157,12 @@ namespace SpaceInvaders
             this.LzrCan.TabStop = false;
             this.LzrCan.Tag = "Cannon";
             // 
+            // GammaRayTimer
+            // 
+            this.GammaRayTimer.Enabled = true;
+            this.GammaRayTimer.Interval = 1000;
+            this.GammaRayTimer.Tick += new System.EventHandler(this.GammaRay_Tick);
+            // 
             // Space
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -168,8 +175,8 @@ namespace SpaceInvaders
             this.Controls.Add(this.ScoreNumLabel);
             this.Controls.Add(this.LevelLabel);
             this.Controls.Add(this.ScoreLabel);
-            this.Controls.Add(this.Life1);
-            this.Controls.Add(this.Life2);
+            this.Controls.Add(this.Life);
+            this.Controls.Add(this.Lif);
             this.Controls.Add(this.LzrCan);
             this.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -178,8 +185,8 @@ namespace SpaceInvaders
             this.Shown += new System.EventHandler(this.Space_Shown);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.SpaceInvaders_KeyDown);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.Life1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.Life2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Life)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Lif)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.LzrCan)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -189,8 +196,8 @@ namespace SpaceInvaders
         #endregion
 
         private System.Windows.Forms.PictureBox LzrCan;
-        private System.Windows.Forms.PictureBox Life1;
-        private System.Windows.Forms.PictureBox Life2;
+        private System.Windows.Forms.PictureBox Life;
+        private System.Windows.Forms.PictureBox Lif;
         private System.Windows.Forms.Timer GameTimer;
         private System.Windows.Forms.Label ScoreLabel;
         private System.Windows.Forms.Label LevelLabel;
@@ -198,6 +205,7 @@ namespace SpaceInvaders
         private System.Windows.Forms.Label LevelNumLabel;
         private System.Windows.Forms.Timer AlienTimer;
         private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.Timer GammaRayTimer;
     }
 }
 

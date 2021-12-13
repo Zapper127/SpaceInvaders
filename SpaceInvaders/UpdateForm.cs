@@ -11,16 +11,15 @@ namespace SpaceInvaders
 {
     static class UpdateForm
     {
-
         private static bool _moveRight;
         private static int _alienCount = 21;
         private static int _blastMove = 15;
         private static int _alienXY = 30;
+        private static int _lives = 2;
         private static int left = 30;
         private static int top = 0;
         private static int speed = 30;
         private static int cnt = 0;
-
 
         //Updates score label
         public static void UpdateScore(Label scorelabel, int score)
@@ -32,9 +31,9 @@ namespace SpaceInvaders
             get { return _alienCount; }
         }
 
+        //Move blasts accordingly
         public static void UpdateShots(Form form, LaserCannon laserCannon)
         {
-            
             foreach (Control findShot in form.Controls)
             {
                 //If it finds a picturebox with label blast move it's position up or remove it
@@ -53,9 +52,9 @@ namespace SpaceInvaders
                     }
                 }
                 //Same thing as before but looks for the aliens version of blasts and updates them accordingly
-                if (findShot is PictureBox && findShot.Tag.ToString() == "gammaRay")
+                if (findShot is PictureBox && findShot.Tag.ToString() == "GammaRay")
                 {
-                    if ((findShot.Top + _blastMove) < 640)
+                    if ((findShot.Top + _blastMove) < 470)
                     {
                         findShot.Top += _blastMove;
                     }
@@ -103,6 +102,7 @@ namespace SpaceInvaders
                                 return 200;
                             }
                         }
+                        //See if blast intersects a barrier and remove it
                         else if (obj is PictureBox && obj.Tag.ToString() == "Barrier")
                         {
                             if (blast.Bounds.IntersectsWith(obj.Bounds))
@@ -119,7 +119,58 @@ namespace SpaceInvaders
             }
             return 0;
         }
-
+        public static bool GammaHit (Form form, PictureBox life1, PictureBox life2)
+        {
+            foreach (Control gammaRay in form.Controls)
+            {
+                foreach (Control obj in form.Controls)
+                {
+                    if (gammaRay is PictureBox && gammaRay.Tag.ToString() == "GammaRay")
+                    {
+                        if (obj is PictureBox && obj.Tag.ToString() == "Cannon")
+                        {
+                            if (gammaRay.Bounds.IntersectsWith(obj.Bounds))
+                            {
+                                if (_lives == 2)
+                                {
+                                    _lives--;
+                                    form.Controls.Remove(gammaRay);
+                                    form.Controls.Remove(life1);
+                                }
+                                else if (_lives == 1)
+                                {
+                                    _lives--;
+                                    form.Controls.Remove(gammaRay);
+                                    form.Controls.Remove(life2);
+                                }
+                                else
+                                {
+                                    return true;
+                                }
+                            }
+                        }
+                        else if (obj is PictureBox && obj.Tag.ToString() == "Barrier")
+                        {
+                            if (gammaRay.Bounds.IntersectsWith(obj.Bounds))
+                            {
+                                form.Controls.Remove(gammaRay);
+                                form.Controls.Remove(obj);
+                            }
+                        }
+                        else if (obj is PictureBox && obj.Tag.ToString() == "blast")
+                        {
+                            if (gammaRay.Bounds.IntersectsWith(obj.Bounds))
+                            {
+                                form.Controls.Remove(gammaRay);
+                                form.Controls.Remove(obj);
+                            }
+                        }
+                    }
+                }
+            }
+            return false;
+        }
+        //Checks if an alien picturebox has intersected with the player or a barrier
         public static bool AlienHit (Form form)
         {
             foreach (Control alien in form.Controls)
@@ -186,18 +237,15 @@ namespace SpaceInvaders
         }
         
         */
-        public static void MoveDown(Form form)
+        //Moves the aliens in the picturebox list down
+        public static void MoveDown(List<PictureBox> alienlist)
         {
-            foreach (Control findAlien in form.Controls)
+            foreach (PictureBox alien in alienlist)
             {
-                if (findAlien is PictureBox && findAlien.Tag.ToString() == "Alien")
-                {
-
-                    findAlien.Top += 20;
-                }
+                alien.Top += 20;
             }
         }
-
+        //Updates the all alien's positions
         public static void UpdateAlienPosition (List<PictureBox> alienlist)
         {
             foreach (PictureBox alien in alienlist)
@@ -211,7 +259,7 @@ namespace SpaceInvaders
                     else
                     {
                         _moveRight = false;
-                        MoveDown(Space.ActiveForm);
+                        MoveDown(alienlist);
                     }
 
                 }
@@ -225,42 +273,12 @@ namespace SpaceInvaders
                     else
                     {
                         _moveRight = true;
-                        MoveDown(Space.ActiveForm);
+                        MoveDown(alienlist);
                     }
                 }
-                /*
-                alien.Location = new Point(alien.Location.X + left, alien.Location.Y + top);
-                int size = alien.Height;
-                if (alien.Location.X <= 0 || alien.Location.X >= 492)
-                {
-                    /*
-                    top = 30;
-                    left = 0;
-                    _moveRight = true;
-                    
-                        top = 1; left = 0; cnt++;
-
-                        if (cnt == _alienXY)
-                        {
-                            top = 0; left = speed * (-1); 
-                        }
-                        else if (cnt == size * 2)
-                        {
-                            top = 0; left = speed; cnt = 0;
-                        }
-                    cnt++;
-                }
-               
-                else if (alien.Location.X + size >= 492)
-                {
-                    top = 30;
-                    left = 0;
-                    _moveRight = false;
-                }
-                */
-
             }
         }
+
         //Change the position for the UFO
         public static bool UpdateUFOPosition (Form form)
         {
@@ -283,7 +301,7 @@ namespace SpaceInvaders
             return false;
         }
 
-
+        //Checks the alien count which if 0 resets aliencount and resets the game form
         public static bool CheckAlienCount()
         {
             if (_alienCount == 0)
